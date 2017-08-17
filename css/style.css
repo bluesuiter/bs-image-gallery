@@ -1,0 +1,30 @@
+.gallery_container{
+    width: 100%;
+    background: #ccc;
+}
+.alignleft.imageCol {
+    width: 35.5%;
+}
+.alignleft.imageCol img{
+    width: 90%; height: 85px;
+}
+img.prevImage {
+    width: 62px;
+    height: 65px;
+}
+.imageCol p {
+    margin: 0;
+}
+.alignleft.fieldCol {
+    width: 64%;
+}
+.gallery_item{
+    background: #f3f3f3; position: relative;
+    padding: .5%; margin: .5%;
+}
+.gallery_image_video, .gallery_image_text, .prevImage{
+    width: 98%; margin: 0 auto; display: block;
+}
+.nvGation{
+    clear:both;
+}

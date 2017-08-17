@@ -1,0 +1,50 @@
+table#ivmGallery{
+    padding: .025%;
+    width: 90%;
+}
+
+#ivmGallery td, #ivmGallery th {
+    border: 1px solid #b3b3b3;
+    padding: .35%;
+    text-align: center;
+}
+
+.clearfix{
+    clear: both;
+}
+
+.col-1{
+    float: left; width: 99.99%;
+}
+
+.col-2{
+    float: left; width: 49.99%;
+}
+
+.col-3{
+    float: left; width: 33.33%;
+}
+
+.col-4{
+    float: left; width: 24.99%;
+}
+
+.nodisplay{
+    display: none;
+}
+
+body .bsImageGallery .button
+{
+	vertical-align: middle;
+	padding: 0 4px 30px;
+}
+
+body .bsImageGallery .button.button-large
+{
+    padding: 0 12px 30px;
+}
+
+.bsImageGallery .dashicons
+{
+	vertical-align: middle;
+}
