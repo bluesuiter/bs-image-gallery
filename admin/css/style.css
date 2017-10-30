@@ -1,17 +1,15 @@
 table#ivmGallery{
     padding: .025%;
-    width: 90%;
+    width: 99%;
 }
 
 #ivmGallery td, #ivmGallery th {
-    border: 1px solid #b3b3b3;
-    padding: .35%;
     text-align: center;
 }
 
-.clearfix{
-    clear: both;
-}
+.bsImageGallery .thumb-prev-cont{max-width: 150px; margin-left: 10px; width: 100%; display: inline-block;}
+
+.clearfix{clear: both; display: block;}
 
 .col-1{
     float: left; width: 99.99%;
@@ -36,7 +34,7 @@ table#ivmGallery{
 body .bsImageGallery .button
 {
 	vertical-align: middle;
-	padding: 0 4px 30px;
+    font-size: 13px;    
 }
 
 body .bsImageGallery .button.button-large
@@ -44,7 +42,12 @@ body .bsImageGallery .button.button-large
     padding: 0 12px 30px;
 }
 
-.bsImageGallery .dashicons
-{
-	vertical-align: middle;
+.bsImageGallery .dashicons {
+    font-size: 18px;
+    vertical-align: middle;
+    line-height: 19px;
+}
+
+.bsImageGallery .descText{
+    height: 100px; resize: none; margin-top:5px;
 }

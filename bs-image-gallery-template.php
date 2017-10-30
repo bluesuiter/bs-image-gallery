@@ -12,8 +12,10 @@ class bsImageGalleryTemplate{
             case 'polaroid':
                 $this->bisPolaroidTemplate($id);
                 break;
+            case 'slider':
+                $this->bisSliderTemplate($id);
+                break;
             default:
-            
                 $this->bisDefaultTemplate($id);
                 break;
         }   
@@ -37,7 +39,7 @@ class bsImageGalleryTemplate{
                         $gallery = unserialize($res['gallery_data']);
 
                         $column = $gallery['column'];
-                        $imgURL = $gallery['img_url'];
+                        $imgId = $gallery['img_id'];
                         $imgTitle = $gallery['img_title'];
                         $imgDesc = $gallery['img_desc'];
                     ?>
@@ -48,8 +50,9 @@ class bsImageGalleryTemplate{
 
                         <div id="album<?php echo $res['id'] ?>" style="display:none" class="albumContainer">
                             <?php for($ika = 0;$ika < max(count($imgURL), count($imgTitle), count($imgDesc)); $ika++){ ?>
-                                <a class="fancybox-media" rel="gallery<?php echo $res['id'] ?>" href="<?php echo $imgURL[$ika] ?>" title="<?php echo $imgTitle[$ika] ?>">
-                                    <img src="<?php echo $imgURL[$ika] ?>" alt="<?php echo $imgTitle[$ika] ?>">
+                                <?php $imgSrc = wp_get_attachment_image_src($imgId[$ika], 'full') ?>
+                                <a class="fancybox-media" rel="gallery<?php echo $res['id'] ?>" href="<?php echo $imgSrc[0] ?>" title="<?php echo $imgTitle[$ika] ?>">
+                                    <img src="<?php echo $imgSrc[0] ?>" alt="<?php echo $imgTitle[$ika] ?>">
                                 </a>
                             <?php } ?>
                         </div>
@@ -63,8 +66,8 @@ class bsImageGalleryTemplate{
                     $('#bsi-polaroid-gallery').on('click', 'img.galleryTrigger', function(){
                         var dataId = $(this).attr('data-id');
                         $('#album' + dataId).find('a:first-child').trigger('click');
-                    })
-                    $('.fancybox-media').fancybox({autoPlay:true,playSpeed:6000});
+                    });
+                    $(".fancybox-media").colorbox({transition:"none", width:"75%", height:"75%"});
                 })
             </script>
             <?php
@@ -80,21 +83,22 @@ class bsImageGalleryTemplate{
         if(!empty($result))
         {
         ?>
-            <div id="bsi-polaroid-gallery" class="bsiGallery bsi-polaroid">
+            <div id="bsi-default-gallery" class="bsi-default-gallery">
                 <div class="albumContainer">
                     <?php
                         $galleryName = $result['gallery_name'];
                         $gallery = unserialize($result['gallery_data']);
 
                         $column = $gallery['column'];
-                        $imgURL = $gallery['img_url'];
+                        $imgId = $gallery['img_id'];
                         $imgTitle = $gallery['img_title'];
                         $imgDesc = $gallery['img_desc'];
                     ?>
                     
                     <?php for($ika = 0;$ika < max(count($imgURL), count($imgTitle), count($imgDesc)); $ika++){ ?>
-                        <a class="fancybox-media" rel="gallery<?php echo $res['id'] ?>" href="<?php echo $imgURL[$ika] ?>" title="<?php echo $imgTitle[$ika] ?>">
-                            <img src="<?php echo $imgURL[$ika] ?>" alt="<?php echo $imgTitle[$ika] ?>">
+                        <?php $imgSrc = wp_get_attachment_image_src($imgId[$ika], 'full') ?>
+                        <a class="fancybox-media" rel="gallery<?php echo $res['id'] ?>" href="<?php echo $imgSrc[0] ?>" title="<?php echo $imgTitle[$ika] ?>">
+                            <img src="<?php echo $imgSrc[0] ?>" alt="<?php echo $imgTitle[$ika] ?>">
                             <p><?php echo $imgTitle[$ika] ?></p>
                         </a>
                     <?php } ?>
@@ -103,38 +107,44 @@ class bsImageGalleryTemplate{
             </div>
             <script>
                 jQuery(function($){
-                    $('.fancybox-media').fancybox({autoPlay:true,playSpeed:6000});
+                    $(".fancybox-media").colorbox({rel:$(this).attr('rel'), title: false, maxHeight:"75%", transition:"fade"});
                 })
             </script>
             <?php
         }
     }
 
-    public function carouselTemplate($bs_gallery_column)
+    public function bisSliderTemplate($id)
     {
-        $imgLink = isset($bs_gallery_column['gallery_image_file']) ? $bs_gallery_column['gallery_image_file'] : '';
-        $imgText = isset($bs_gallery_column['gallery_image_text']) ? $bs_gallery_column['gallery_image_text'] : '';
-        $imgActive = isset($bs_gallery_column['gallery_image_active']) ? $bs_gallery_column['gallery_image_active'] : '';
-        
-        $count = max(count($imgLink), count($imgText));
-        ?>
-        <div class="gallery_section">
-            <?php
-            for ($ika = 0; $ika < $count; $ika++)
-            {
-                $img = isset($imgLink[$ika]) ? $imgLink[$ika] : '';
-                $txt = isset($imgText[$ika]) ? stripslashes($imgText[$ika]) : '';
-                $act = isset($imgActive[$ika]) ? $imgActive[$ika] : '';
+        $objDataClass = new bsDataClass();
+        $result = $objDataClass->bsiFetchData($id, array('id', 'gallery_name', 'gallery_data', 'thumbnail', 'status'));
 
-                if ($act == '1')
-                {
+        if(!empty($result)){
+        	$galleryName = $result['gallery_name'];
+        ?>
+        <div class="gallery_section <?php echo $galleryName?>">
+            <?php
+                $gallery = unserialize($result['gallery_data']);
+
+                $column = $gallery['column'];
+                $imgId = $gallery['img_id'];
+                $imgTitle = $gallery['img_title'];
+                $imgDesc = $gallery['img_desc'];
+
+                for($ika = 0;$ika < max(count($imgURL), count($imgTitle)); $ika++){
                     ?>
-                    <img width="100%" src="<?php echo $img; ?>" alt="<?php echo $txt; ?>"/>
+                    <?php $imgSrc = wp_get_attachment_image_src($imgId[$ika], 'full') ?>
+                    <img width="100%" src="<?php echo $imgSrc[0]; ?>" alt="<?php echo $imgTitle[$ika]; ?>"/>
                     <?php
                 }
             }
             ?>
         </div>  
+        <script>
+        	jQuery(function($){
+        		$('.<?php echo $galleryName?>').bxSlider({useCSS:true});
+        	});
+        </script>
         <?php
     }
 
@@ -153,7 +163,7 @@ class bsImageGalleryTemplate{
             <?php
             for ($ika = 0; $ika < $count; $ika++)
             {
-                $img = isset($imgLink[$ika]) ? $imgLink[$ika] : '';
+                $img = isset($imgLink[$ika]) ? wp_get_attachment_image_src($imgLink[$ika], 'full') : '';
                 $vid = isset($imgVideo[$ika]) ? $imgVideo[$ika] : '';
                 $txt = isset($imgText[$ika]) ? stripslashes($imgText[$ika]) : '';
                 $act = isset($imgActive[$ika]) ? $imgActive[$ika] : '';
@@ -166,11 +176,11 @@ class bsImageGalleryTemplate{
                             <?php
                                 if($fancyBox)
                                 {
-                                    $this->imageWithFancyBox($vid, $img, $txt);
+                                    $this->imageWithFancyBox($vid, $img[0], $txt);
                                 }
                                 else
                                 {
-                                    $this->imageWithOutFancyBox($img, $txt);
+                                    $this->imageWithOutFancyBox($img[0], $txt);
                                 }
                             ?>
                         </div>

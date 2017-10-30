@@ -27,8 +27,11 @@ jQuery(function($)
 
 
     jQuery('button.remRow').click(function(){
-        jQuery('tr#bsigrow' + jQuery(this).attr('data-rowid')).remove();
-        correctIndexing();
+        if(confirm('This will remove image from gallery list.'))
+        {
+            jQuery('tr#bsigrow' + jQuery(this).attr('data-rowid')).remove();
+            correctIndexing();
+        }
     });
 
     
@@ -36,7 +39,7 @@ jQuery(function($)
     var i = 0;
     var file_frame, id, img;
     
-    $('button.upimage').on('click', function (slider)
+    $('div.bsImageGallery').on('click', 'button.upimage, button.edtGlryRow', function (slider)
     {
         $this = $(this);
         slider.preventDefault();
@@ -44,13 +47,12 @@ jQuery(function($)
         /*/ If the media frame already exists, reopen it.*/
         if (file_frame) {
             file_frame.open();
-            return;
+            return false;
         }
 
         /*/ Create the media frame.*/
         file_frame = wp.media.frames.file_frame = wp.media({
-            frame: 'post',
-            title: jQuery(this).data('uploader_title'),
+            title: 'BS-Image-Gallery',
             button: {
                 text: jQuery(this).data('uploader_button_text'),
             },
@@ -59,20 +61,20 @@ jQuery(function($)
 
 
         /*/ When a file is selected, run a callback.*/
-        file_frame.on('insert', function ()
+        file_frame.on('select', function ()
         {
             attachment = file_frame.state().get('selection').toJSON();
             rowId = $this.attr('data-rowid');
  
             if($this.attr('data-action') == 'edt') 
             {
-                console.log(attachment[0].url)
                 $('#bsigrow'+rowId).find('img.previmg').attr('src', attachment[0].url);
-                $('#bsigrow'+rowId).find('#image'+rowId).val(attachment[0].url);
+                $('#bsigrow'+rowId).find('#image'+rowId).val(attachment[0].id);
             }
             else if($this.attr('data-field'))
             {
-                $($this.attr('data-field')).val(attachment[0].url);
+                $('#thumbnail-prev').attr('src', attachment[0].url)
+                $($this.attr('data-field')).val(attachment[0].id);
             }
             else
             {
@@ -85,7 +87,6 @@ jQuery(function($)
 
         /*/ Finally, open the modal*/
         file_frame.open();
-        jQuery('button#upimage, button.edtRow').die("click");
     });   
     /* Image Uploading Code */
 });
@@ -145,7 +146,7 @@ function ivmRowTemplate(attachment, rowId)
                         <span class="dashicons dashicons-yes"></span></button>\
                         <button title="Trash Image" class="remRow button" data-rowid="'+ rowId +'" type="button">\
                         <span class="dashicons dashicons-trash"></span></button>\
-                        <button title="Edit Image" class="edtRow button upimage" data-action="edt" data-rowid="'+ rowId +'" type="button">\
+                        <button title="Edit Image" class="edtRow button" data-action="edt" data-rowid="'+ rowId +'" type="button">\
                         <span class="dashicons dashicons-edit"></span></button></td></tr>';
 }
 

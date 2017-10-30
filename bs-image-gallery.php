@@ -53,11 +53,11 @@ apply_filters('the_content', 'applyGalleryFilter');
 
 
 function enqueueFancyBox()
-{
+{ 
     global $wp_scripts;
 
-    wp_enqueue_style('fancybox-css', plugin_dir_url(__FILE__) . 'css/jquery.fancybox.css', false, '2.1.5', 'all');
-    wp_enqueue_script('fancybox-js', plugin_dir_url(__FILE__) . 'js/jquery.fancybox.js', array('jquery'), '2.1.5', false);
+    wp_enqueue_style('fancybox-css', plugin_dir_url(__FILE__) . 'css/colorbox.css', false, '1.6.4', 'all');
+    wp_enqueue_script('fancybox-js', plugin_dir_url(__FILE__) . 'js/jquery.colorbox-min.js', array('jquery'), '1.6.4', false);
     wp_enqueue_style('bxslider-css', plugin_dir_url(__FILE__) . 'bxslider/jquery.bxslider.min.css', false, '4.2.12', 'all');
     wp_enqueue_script('bxslider-js', plugin_dir_url(__FILE__) . 'bxslider/jquery.bxslider.min.js', array('jquery'), '4.2.12', false);
 }

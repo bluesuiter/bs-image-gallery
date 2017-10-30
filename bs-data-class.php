@@ -77,7 +77,7 @@ class bsDataClass{
     
         $galleryData['row'] = handlePostData('row_count');
         $galleryData['column'] = handlePostData('col_count');
-        $galleryData['img_url'] = handlePostData('image');
+        $galleryData['img_id'] = handlePostData('image');
         $galleryData['img_title'] = handlePostData('title');
         $galleryData['img_desc'] = handlePostData('descText');
         $galleryData['img_status'] = handlePostData('active');

@@ -3,7 +3,7 @@
 class bsImageGalleryAdminInterface extends bsDataClass
 {
     
-    public function _ivmGalleryList()
+    public function ivmGalleryList()
     {
         $results = $this->bsiFetchData();
         $count = 0;
@@ -47,7 +47,7 @@ class bsImageGalleryAdminInterface extends bsDataClass
     }   
 
 
-    public function _ivmGalleryPanel()
+    public function ivmGalleryPanel()
     {
         $page = checkArrayValue($_GET, 'page');
         $label = 'Add';
@@ -62,9 +62,9 @@ class bsImageGalleryAdminInterface extends bsDataClass
             <form name="ivmGallery" method="post" action="<?php echo admin_url('admin.php?page=addbsigallery') ?>">
 
                 <?php if($page == 'addbsigallery'){ ?>
-                    <?php $this->_ivmAddGalleryForm() ?>
+                    <?php $this->ivmAddGalleryForm() ?>
                 <?php } else if($page == 'edtbsigallery'){ ?>
-                    <?php $this->_ivmEditGalleryForm() ?>
+                    <?php $this->ivmEditGalleryForm() ?>
                 <?php } ?>
 
             </form>
@@ -79,23 +79,23 @@ class bsImageGalleryAdminInterface extends bsDataClass
     }
 
 
-    public function _ivmAddGalleryForm()
+    public function ivmAddGalleryForm()
     {
         $sliderCount = $this->ivmGalleryAutoCount();
         ?>
             <div class="col-1">
                 <div class="col-3">
-                    <label class="col-3">Gallery Name: </label>
-                    <input type="text" name="galleryName" class="col-2 newtag form-input-tip ui-autocomplete-input" value=""/>
+                    <label id="galleryName">Gallery Name: </label>
+                    <input type="text" name="galleryName" class="newtag form-input-tip ui-autocomplete-input" value=""/>
                 </div>
             
                 <div class="col-3">
                     <label class="col-3">Thumbnail: </label>
                     <div class="col-2">
-                        <button title="Add Thumbnail" id="thumbnail" class="button button-default upimage alignright" name="thumbnail" type="button">
-                            <span class="dashicons dashicons-upload"></span>
+                        <button title="Add Thumbnail" id="thumbnail" class="button button-default upimage" name="thumbnail" type="button">
+                            <span class="dashicons dashicons-upload"></span>Upload Thumbnail
                         </button>
-                        <input type="text" name="thumbnail" size="12" readonly class="form-input-tip readonly" value=""/>
+                        <input type="hidden" name="thumbnail" size="12" readonly class="form-input-tip readonly" value=""/>
                     </div>
                 </div>
             </div>
@@ -127,7 +127,7 @@ class bsImageGalleryAdminInterface extends bsDataClass
     }
 
 
-    public function _ivmEditGalleryForm()
+    public function ivmEditGalleryForm()
     {
         $galleryData = '';
         if(checkArrayValue($_GET, 'gid'))
@@ -151,36 +151,35 @@ class bsImageGalleryAdminInterface extends bsDataClass
         ?>
             <div class="col-1">
                 <div class="col-3">
-                    <label class="col-3">Gallery Name: </label>
-                    <input type="text" name="galleryName" class="newtag form-input-tip ui-autocomplete-input" value="<?php echo $galleryName ?>"/>
+                    <label>Gallery Name: </label>
+                    <input type="text" name="galleryName" size="30" class="newtag form-input-tip ui-autocomplete-input" value="<?php echo $galleryName ?>"/>
                 </div>
 
                 <div class="col-3">
-                    <label class="col-3">Thumbnail: </label>
-                    <div class="col-2">
-                        <button title="Add Thumbnail" id="upthumbnail" class="button button-default upimage alignright" data-field="input[name='thumbnail']" name="upthumbnail" type="button">
-                            <span class="dashicons dashicons-upload"></span>
-                        </button>
-                        <input type="text" name="thumbnail" size="12" readonly class="form-input-tip readonly" value="<?php echo $thumbNail ?>"/>
-                    </div>
+                    <button title="Add Thumbnail" id="upthumbnail" class="button alignleft button-default upimage" data-field="input[name='thumbnail']" name="upthumbnail" type="button">
+                        Set Thumbnail
+                    </button>                     
+                    <span class="thumb-prev-cont">
+                        <img src="" alt="" id="thumbnail-prev" style="max-width:100%;"/>
+                    </span>
+                    <input type="hidden" name="thumbnail" value="<?php echo $thumbNail ?>"/>
                 </div>
-            </div>
 
-            <div class="wrap">
-                <button title="Upload Image" id="upimage" class="button button-primary button multiple alignright upimage" name="upimage" data-rowid="0" type="button">
-                    <span class="dashicons dashicons-upload"></span> Upload Image
-                </button>
-                <button title="Update Gallery" id="upgallery" class="button button-primary button alignright" name="upgallery" type="submit">
-                    <span class="dashicons dashicons-update"></span> Save Gallery
-                </button>
+                <div class="col-3">
+                    <button title="Upload Image" id="upimage" class="button button-primary button multiple alignnone upimage" name="upimage" data-rowid="0" type="button">
+                        <span class="dashicons dashicons-upload"></span> Upload Image
+                    </button>
+                    <button title="Update Gallery" id="upgallery" class="button button-primary button alignnone" name="upgallery" type="submit">
+                        <span class="dashicons dashicons-update"></span> Save Gallery
+                    </button>
+                </div>
             </div>
 
             <table class="wp-list-table widefat fixed striped posts" cellspacing="0" id="ivmGallery">
                 <thead>
                     <tr>
                         <th>Image</th>
-                        <th>Image Title</th>
-                        <th>Text</th></th>
+                        <th>Text</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -188,15 +187,13 @@ class bsImageGalleryAdminInterface extends bsDataClass
                     <?php for($ika=0; $ika < count($imgURL) ; $ika++){ ?>
                         <tr class="connectedSortable" id="bsigrow<?php echo $ika ?>" >
                             <td>
-                                <img style="max-width:100px;" src="<?php echo $imgURL[$ika] ?>" class="previmg" id="previmg<?php echo $ika ?>"/>
+                                <img style="max-width:100px;" src="<?php echo wp_get_attachment_image_src($imgURL[$ika])[0] ?>" class="previmg" id="previmg<?php echo $ika ?>"/>
                                 <input type="hidden" class="imageVal" id="image<?php echo $ika ?>" name="image[<?php echo $ika ?>]" value="<?php echo $imgURL[$ika] ?>"/>
                             </td>
                             <td>
-                                <input type="text" class="titleVal" id="title<?php echo $ika ?>" name="title[<?php echo $ika ?>]" value="<?php echo $imgTitle[$ika] ?>"/>
+                                <input type="text" class="titleVal col-1" id="title<?php echo $ika ?>" name="title[<?php echo $ika ?>]" value="<?php echo $imgTitle[$ika] ?>" placeholder="Title"/>
                                 <input type="hidden" id="active[<?php echo $ika ?>]" name="active[<?php echo $ika ?>]" value="<?php echo $imgDesc[$ika] ?>"/>
-                            </td>
-                            <td>
-                                <textarea class="descText" id="descText<?php echo $ika ?>" name="descText[<?php echo $ika ?>]"><?php echo $imgDesc[$ika] ?></textarea>
+                                <textarea class="descText col-1" id="descText<?php echo $ika ?>" name="descText[<?php echo $ika ?>]" placeholder="Description"><?php echo $imgDesc[$ika] ?></textarea>                                
                             </td>
                             <td>
                                 <!-- Active/Deactive -->
@@ -206,7 +203,7 @@ class bsImageGalleryAdminInterface extends bsDataClass
                                 <button title="Trash Image" class="remRow button" data-rowid="<?php echo $ika ?>" type="button">
                                 <span class="dashicons dashicons-trash"></span></button>
                                 <!-- Edit -->
-                                <button title="Edit Image" class="edtRow button" data-action="edt" data-rowid="<?php echo $ika ?>" type="button">
+                                <button title="Edit Image" class="edtGlryRow button" data-action="edt" data-rowid="<?php echo $ika ?>" type="button">
                                 <span class="dashicons dashicons-edit"></span></button>
                             </td>
                         </tr>
