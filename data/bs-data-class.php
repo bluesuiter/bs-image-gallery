@@ -5,7 +5,7 @@ class bsDataClass{
     var $table = 'bsImageGallery';
     var $selectField = [];
 
-    public function _ivmGalleryTable()
+    public function bsGalleryTable()
     {
         global $wpdb;
         $charset_collate = $wpdb->get_charset_collate();
@@ -31,7 +31,7 @@ class bsDataClass{
     }
 
 
-    protected function ivmSaveGallery()
+    protected function bsSaveGallery()
     {
         if(wp_verify_nonce(handlePostData('glryNonce'), 'save_ivm_galry'))
         {
@@ -67,7 +67,7 @@ class bsDataClass{
     }
 
 
-    private function bsiCreateGalleryData()
+    private function bsCreateGalleryData()
     {
         $data = [];
         $data['gallery_name'] = handlePostData('galleryName');
@@ -85,12 +85,12 @@ class bsDataClass{
     }
 
     /* 
-    * public function > bsiFetchData
+    * public function > bsFetchData
     * id = integer
     * field = array
     * row = single/multi
     */
-    public function bsiFetchData($id = null, $field = array(), $multi = false)
+    public function bsFetchData($id = null, $field = array(), $multi = false)
     {
         global $wpdb;
         $tableName = $wpdb->prefix . $this->table;
@@ -125,7 +125,7 @@ class bsDataClass{
     }
 
 
-    protected function ivmGalleryAutoCount()
+    protected function bsGalleryAutoCount()
     {
         global $wpdb;
         $tableName = $wpdb->prefix . $this->table;

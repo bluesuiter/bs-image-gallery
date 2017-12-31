@@ -1,24 +1,23 @@
 <?php 
 
-class _ivmGalleryPanel extends bsImageGalleryAdminInterface
+class bsGalleryPanel extends bsImageGalleryAdminInterface
 {
     
     var $selectField = '';
 
     public function addImageVideoAdmin()
     {
-        add_menu_page('BS Image Gallery', 'BS Image Gallery', 'activate_plugins', 'ivmgallery', array($this, 'ivmGalleryList'), 'dashicons-format-gallery', '17');
-        add_submenu_page('ivmgallery', 'Add - BS Image Gallery', 'Add Album', 'activate_plugins', 'addbsigallery', [$this, 'ivmAddGallery']);
-        add_submenu_page('', 'Edit - BS Image Gallery', '', 'activate_plugins', 'edtbsigallery', [$this, 'ivmGalleryPanel']);
-        add_action('wp_ajax_uploadivMGallery', 'ivmSaveGallery');
+        add_menu_page('BS Image Gallery', 'BS Image Gallery', 'activate_plugins', 'bsgallery', array($this, 'bsGalleryList'), 'dashicons-format-gallery', '17');
+        add_submenu_page('bsgallery', 'Add - BS Image Gallery', 'Add Album', 'activate_plugins', 'addbsigallery', [$this, 'bsAddGallery']);
+        add_submenu_page('', 'Edit - BS Image Gallery', '', 'activate_plugins', 'edtbsigallery', [$this, 'bsGalleryPanel']);
+        add_action('wp_ajax_uploadivMGallery', 'bsSaveGallery');
     }
 
 
-    public function ivmAddGallery()
+    public function bsAddGallery()
     {
-        $this->ivmSaveGallery();    
-
-        $this->ivmGalleryPanel();
+        $this->bsSaveGallery();    
+        $this->bsGalleryPanel();
     }
     
 }

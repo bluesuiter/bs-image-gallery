@@ -3,9 +3,9 @@
 class bsImageGalleryAdminInterface extends bsDataClass
 {
     
-    public function ivmGalleryList()
+    public function bsGalleryList()
     {
-        $results = $this->bsiFetchData();
+        $results = $this->bsFetchData();
         $count = 0;
 
         ?>
@@ -47,7 +47,7 @@ class bsImageGalleryAdminInterface extends bsDataClass
     }   
 
 
-    public function ivmGalleryPanel()
+    public function bsGalleryPanel()
     {
         $page = checkArrayValue($_GET, 'page');
         $label = 'Add';
@@ -62,9 +62,9 @@ class bsImageGalleryAdminInterface extends bsDataClass
             <form name="ivmGallery" method="post" action="<?php echo admin_url('admin.php?page=addbsigallery') ?>">
 
                 <?php if($page == 'addbsigallery'){ ?>
-                    <?php $this->ivmAddGalleryForm() ?>
+                    <?php $this->bsAddGalleryForm() ?>
                 <?php } else if($page == 'edtbsigallery'){ ?>
-                    <?php $this->ivmEditGalleryForm() ?>
+                    <?php $this->bsEditGalleryForm() ?>
                 <?php } ?>
 
             </form>
@@ -79,14 +79,14 @@ class bsImageGalleryAdminInterface extends bsDataClass
     }
 
 
-    public function ivmAddGalleryForm()
+    public function bsAddGalleryForm()
     {
-        $sliderCount = $this->ivmGalleryAutoCount();
+        $sliderCount = $this->bsGalleryAutoCount();
         ?>
             <div class="col-1">
                 <div class="col-3">
                     <label id="galleryName">Gallery Name: </label>
-                    <input type="text" name="galleryName" class="newtag form-input-tip ui-autocomplete-input" value=""/>
+                    <input type="text" name="galleryName" class="newtag form-input-tip ui-autocomplete-input" value="Gallery-<?php echo $sliderCount ?>"/>
                 </div>
             
                 <div class="col-3">
@@ -127,12 +127,12 @@ class bsImageGalleryAdminInterface extends bsDataClass
     }
 
 
-    public function ivmEditGalleryForm()
+    public function bsEditGalleryForm()
     {
         $galleryData = '';
         if(checkArrayValue($_GET, 'gid'))
         {
-            $galleryData = $this->bsiFetchData($_GET['gid']);
+            $galleryData = $this->bsFetchData($_GET['gid']);
         }
         else
         {
@@ -144,7 +144,8 @@ class bsImageGalleryAdminInterface extends bsDataClass
         $thumbNail = checkArrayValue($galleryData, 'thumbnail');
 
         $imageData = unserialize(checkArrayValue($galleryData, 'gallery_data'));
-        $imgURL = $imageData['img_url'];
+       
+        $imgURL = $imageData['img_id'];
         $imgTitle = $imageData['img_title'];
         $imgDesc = $imageData['img_desc'];
 
@@ -183,7 +184,7 @@ class bsImageGalleryAdminInterface extends bsDataClass
                         <th>Action</th>
                     </tr>
                 </thead>
-                <tbody id="ivmGalleryBody">
+                <tbody id="ivmGalleryBody"><?php pr($imgURL) ?>
                     <?php for($ika=0; $ika < count($imgURL) ; $ika++){ ?>
                         <tr class="connectedSortable" id="bsigrow<?php echo $ika ?>" >
                             <td>

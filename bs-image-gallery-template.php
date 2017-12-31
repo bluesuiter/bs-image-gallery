@@ -25,7 +25,7 @@ class bsImageGalleryTemplate{
     public function bisPolaroidTemplate($id)
     {
         $objDataClass = new bsDataClass();
-        $result = $objDataClass->bsiFetchData($id, array('id', 'gallery_name', 'gallery_data', 'thumbnail', 'status'), true);
+        $result = $objDataClass->bsFetchData($id, array('id', 'gallery_name', 'gallery_data', 'thumbnail', 'status'), true);
 
         if(!empty($result))
         {
@@ -78,7 +78,7 @@ class bsImageGalleryTemplate{
     public function bisDefaultTemplate($id)
     {
         $objDataClass = new bsDataClass();
-        $result = $objDataClass->bsiFetchData($id, array('id', 'gallery_name', 'gallery_data', 'thumbnail', 'status'));
+        $result = $objDataClass->bsFetchData($id, array('id', 'gallery_name', 'gallery_data', 'thumbnail', 'status'));
 
         if(!empty($result))
         {
@@ -117,7 +117,7 @@ class bsImageGalleryTemplate{
     public function bisSliderTemplate($id)
     {
         $objDataClass = new bsDataClass();
-        $result = $objDataClass->bsiFetchData($id, array('id', 'gallery_name', 'gallery_data', 'thumbnail', 'status'));
+        $result = $objDataClass->bsFetchData($id, array('id', 'gallery_name', 'gallery_data', 'thumbnail', 'status'));
 
         if(!empty($result)){
         	$galleryName = $result['gallery_name'];

@@ -25,8 +25,21 @@ jQuery(function($)
         });
     });*/
 
+    jQuery('#ivmGalleryBody').on('click', 'button.actGlryRow', function(){
+            var rowId = jQuery(this).attr('data-rowid');
+            var actFld = jQuery('tr#bsigrow' + rowId + ' #active' + rowId);
+            actFld.val() == 1 ? actFld.val(0) : actFld.val(1);
+            
+            if(jQuery(this).find('span').hasClass('dashicons-no'))
+            {
+                jQuery(this).find('span').removeClass('dashicons-no').addClass('dashicons-yes');            
+            }else{
+                jQuery(this).find('span').removeClass('dashicons-yes').addClass('dashicons-no');            
+            }
+    });
 
-    jQuery('button.remRow').click(function(){
+
+    jQuery('#ivmGalleryBody').on('click', 'button.remGlryRow', function(){
         if(confirm('This will remove image from gallery list.'))
         {
             jQuery('tr#bsigrow' + jQuery(this).attr('data-rowid')).remove();
@@ -112,6 +125,7 @@ function ivmSetGalleryData(attachment, rowId)
     for(ika = 0; ika < len; ika++)
     {   
         dataArr.url = attachment[ika].url;
+        dataArr.id = attachment[ika].id;
         dataArr.title = attachment[ika].title;
         
         if(attachment[ika].title == '')
@@ -135,18 +149,18 @@ function ivmRowTemplate(attachment, rowId)
 {
     return rowTemplate =  '<tr class="connectedSortable" id="bsigrow'+ rowId +'"><td>\
                         <img style="max-width:100px;" src="'+ attachment.url +'" class="previmg" id="previmg'+ rowId +'"/>\
-                        <input type="hidden" class="imageVal" id="image'+ rowId +'" name="image['+ rowId +']" value="'+ attachment.url +'"/>\
+                        <input type="hidden" class="imageVal" id="image'+ rowId +'" name="image['+ rowId +']" value="'+ attachment.id +'"/>\
                         </td><td>\
-                        <input type="text" class="titleVal" id="title'+ rowId +'" name="title['+ rowId +']" value="'+ attachment.title +'"/>\
+                        <input type="text" class="col-1 titleVal" id="title'+ rowId +'" name="title['+ rowId +']" value="'+ attachment.title +'"/>\
                         <input type="hidden" id="active'+ rowId +'" name="active['+ rowId +']" value="1"/>\
                         </td><td>\
-                        <textarea class="descText" id="descText'+ rowId +'" name="descText['+ rowId +']"></textarea>\
+                        <textarea class="descText col-1" id="descText'+ rowId +'" name="descText['+ rowId +']"></textarea>\
                         </td><td>\
-                        <button title="Active/Deactive" class="actDct button" data-rowid="'+ rowId +'" type="button">\
-                        <span class="dashicons dashicons-yes"></span></button>\
-                        <button title="Trash Image" class="remRow button" data-rowid="'+ rowId +'" type="button">\
+                        <button title="Active/Deactive" class="actGlryRow button" data-rowid="'+ rowId +'" type="button">\
+                        <span class="dashicons dashicons-no"></span></button>\
+                        <button title="Trash Image" class="remGlryRow button" data-rowid="'+ rowId +'" type="button">\
                         <span class="dashicons dashicons-trash"></span></button>\
-                        <button title="Edit Image" class="edtRow button" data-action="edt" data-rowid="'+ rowId +'" type="button">\
+                        <button title="Edit Image" class="edtGlryRow button" data-action="edt" data-rowid="'+ rowId +'" type="button">\
                         <span class="dashicons dashicons-edit"></span></button></td></tr>';
 }
 
@@ -161,9 +175,9 @@ function correctIndexing()
         jQuery(this).find('.titleVal').attr({id: 'title' + _ikA, name:'title['+ _ikA +']'});
         jQuery(this).find('.active').attr({id: 'active' + _ikA, name:'active['+ _ikA +']'});
         jQuery(this).find('.descText').attr({id: 'descText' + _ikA, name:'descText['+ _ikA +']'});
-        jQuery(this).find('button.actDct').attr('data-rowid', + _ikA);
-        jQuery(this).find('button.remRow').attr('data-rowid', + _ikA);
-        jQuery(this).find('button.edtRow').attr('data-rowid', + _ikA);
+        jQuery(this).find('button.actGlryRow, button.edtGlryRow, button.edtGlryRow').attr('data-rowid', + _ikA);
+        // jQuery(this).find('button.remRow').attr('data-rowid', + _ikA);
+        // jQuery(this).find('button.edtRow').attr('data-rowid', + _ikA);
         ++_ikA;
     });
     _ikA = 0;

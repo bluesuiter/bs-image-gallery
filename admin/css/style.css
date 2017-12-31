@@ -27,6 +27,10 @@ table#ivmGallery{
     float: left; width: 24.99%;
 }
 
+.col-5{
+    float: left; width: 19.99%;
+}
+
 .nodisplay{
     display: none;
 }
@@ -50,4 +54,20 @@ body .bsImageGallery .button.button-large
 
 .bsImageGallery .descText{
     height: 100px; resize: none; margin-top:5px;
+}
+
+.dashicons-no{
+    color: rgb(206, 171, 18);
+}
+
+.dashicons-trash{
+    color: #f22;
+}
+
+.dashicons-yes{
+    color: rgb(18, 88, 18);
+}
+
+.dashicons-edit{
+    color: rgb(25, 110, 206);
 }

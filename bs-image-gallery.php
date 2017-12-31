@@ -39,7 +39,7 @@ if (!class_exists('ImageVideoMetaController') && !class_exists('ImageVideoMetaCo
 _bsigLodFile(dirname(__FILE__) . '/admin/bs-image-gallery-admin-interface.php');
 if(_bsigLodFile(plugin_dir_path(__FILE__).'/admin/bs-image-gallery-admin.php'))
 {
-    $objGalleryPanel = new _ivmGalleryPanel();
+    $objGalleryPanel = new bsGalleryPanel();
     add_action('admin_menu', array($objGalleryPanel, 'addImageVideoAdmin'));
 }
 
@@ -64,12 +64,12 @@ function enqueueFancyBox()
 add_filter('wp_enqueue_scripts', 'enqueueFancyBox');
 
 
-function _ivmActivatePlugin()
+function bsActivatePlugin()
 {
     $objbsDataClass = new bsDataClass();
-    $objbsDataClass->_ivmGalleryTable();
+    $objbsDataClass->bsGalleryTable();
 }
-register_activation_hook(__FILE__, '_ivmActivatePlugin');
+register_activation_hook(__FILE__, 'bsActivatePlugin');
 
 
 if (!class_exists('bsImageGalleryTemplate') && _bsigLodFile(dirname(__FILE__) . "/bs-image-gallery-template.php"))
