@@ -37,7 +37,7 @@ class bsDataClass{
         {
             global $wpdb;       
             $table_name = $wpdb->prefix . $this->table;
-            $result = $this->bsiCreateGalleryData();
+            $result = $this->bsCreateGalleryData();
             $result['created'] = current_time('mysql');
             $result = $wpdb->insert($table_name, $result); 
         }
@@ -47,7 +47,7 @@ class bsDataClass{
             $table_name = $wpdb->prefix . $this->table;
 
             $id = handlePostData('gkey');
-            $result = $this->bsiCreateGalleryData();
+            $result = $this->bsCreateGalleryData();
             $result['modified'] = current_time('mysql');
                         
             $result = $wpdb->update($table_name, $result, array('id' => $id));

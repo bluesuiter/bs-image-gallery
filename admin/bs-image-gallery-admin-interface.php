@@ -184,7 +184,7 @@ class bsImageGalleryAdminInterface extends bsDataClass
                         <th>Action</th>
                     </tr>
                 </thead>
-                <tbody id="ivmGalleryBody"><?php pr($imgURL) ?>
+                <tbody id="ivmGalleryBody">
                     <?php for($ika=0; $ika < count($imgURL) ; $ika++){ ?>
                         <tr class="connectedSortable" id="bsigrow<?php echo $ika ?>" >
                             <td>
@@ -198,10 +198,10 @@ class bsImageGalleryAdminInterface extends bsDataClass
                             </td>
                             <td>
                                 <!-- Active/Deactive -->
-                                <button title="Active/Deactive" class="actDct button" data-rowid="<?php echo $ika ?>" type="button">
+                                <button title="Active/Deactive" class="actGlryRow button" data-rowid="<?php echo $ika ?>" type="button">
                                 <span class="dashicons dashicons-yes"></span></button>
                                 <!-- Trash -->
-                                <button title="Trash Image" class="remRow button" data-rowid="<?php echo $ika ?>" type="button">
+                                <button title="Trash Image" class="remGlryRow button" data-rowid="<?php echo $ika ?>" type="button">
                                 <span class="dashicons dashicons-trash"></span></button>
                                 <!-- Edit -->
                                 <button title="Edit Image" class="edtGlryRow button" data-action="edt" data-rowid="<?php echo $ika ?>" type="button">

@@ -49,7 +49,7 @@ class bsImageGalleryTemplate{
                         </div>
 
                         <div id="album<?php echo $res['id'] ?>" style="display:none" class="albumContainer">
-                            <?php for($ika = 0;$ika < max(count($imgURL), count($imgTitle), count($imgDesc)); $ika++){ ?>
+                            <?php for($ika = 0;$ika < max(count($imgId), count($imgTitle), count($imgDesc)); $ika++){ ?>
                                 <?php $imgSrc = wp_get_attachment_image_src($imgId[$ika], 'full') ?>
                                 <a class="fancybox-media" rel="gallery<?php echo $res['id'] ?>" href="<?php echo $imgSrc[0] ?>" title="<?php echo $imgTitle[$ika] ?>">
                                     <img src="<?php echo $imgSrc[0] ?>" alt="<?php echo $imgTitle[$ika] ?>">
@@ -131,7 +131,7 @@ class bsImageGalleryTemplate{
                 $imgTitle = $gallery['img_title'];
                 $imgDesc = $gallery['img_desc'];
 
-                for($ika = 0;$ika < max(count($imgURL), count($imgTitle)); $ika++){
+                for($ika = 0;$ika < max(count($imgId), count($imgTitle)); $ika++){
                     ?>
                     <?php $imgSrc = wp_get_attachment_image_src($imgId[$ika], 'full') ?>
                     <img width="100%" src="<?php echo $imgSrc[0]; ?>" alt="<?php echo $imgTitle[$ika]; ?>"/>
