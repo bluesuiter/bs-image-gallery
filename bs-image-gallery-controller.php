@@ -1,15 +1,12 @@
 <?php
 
-class ImageVideoMetaController
-{
+class ImageVideoMetaController {
 
-    public function addImageVideoMetaField()
-    {
+    public function addImageVideoMetaField() {
         add_meta_box('imageVideoMetaField', 'Image Video Meta Field', [$this, 'imageVideoMetaField'], ['post', 'page'], 'normal', 'default');
     }
 
-    public function imageVideoMetaField()
-    {
+    public function imageVideoMetaField() {
         global $post;
         $ika = 0;
         $postID = get_the_ID();
@@ -27,8 +24,7 @@ class ImageVideoMetaController
         echo '<input type="hidden" name="servicemeta_noncename" id="servicemeta_noncename" value="' . wp_create_nonce(plugin_basename(__FILE__)) . '" />';
         $strFile = get_post_meta($post->ID, $key = 'gallery_image_file', true);
         $media_file = get_post_meta($post->ID, $key = '_wp_attached_file', true);
-        if (!empty($media_file))
-        {
+        if (!empty($media_file)) {
             $strFile = $media_file;
         }
         ?>
@@ -50,8 +46,7 @@ class ImageVideoMetaController
                 </thead>
                 <tbody>
                     <?php
-                    for ($i = 0; $i < max(count($imgLink), count($imgVideo), count($imgText)); $i++)
-                    {
+                    for ($i = 0; $i < max(count($imgLink), count($imgVideo), count($imgText)); $i++) {
                         $img = isset($imgLink[$i]) ? $imgLink[$i] : '';
                         $vid = isset($imgVideo[$i]) ? $imgVideo[$i] : '';
                         $txt = isset($imgText[$i]) ? stripslashes($imgText[$i]) : '';
@@ -88,18 +83,15 @@ class ImageVideoMetaController
     //
     /* /Saving the file */
 
-    public function saveImageVideoMetaFields($post_id, $post)
-    {
+    public function saveImageVideoMetaFields($post_id, $post) {
         /* / verify this came from the our screen and with proper authorization, */
         /* / because save_post can be triggered at other times */
-        if (isset($_POST['servicemeta_noncename']) && !wp_verify_nonce($_POST['servicemeta_noncename'], plugin_basename(__FILE__)))
-        {
+        if (isset($_POST['servicemeta_noncename']) && !wp_verify_nonce($_POST['servicemeta_noncename'], plugin_basename(__FILE__))) {
             return $post->ID;
         }
 
         /* / Is the user allowed to edit the post? */
-        if (!current_user_can('edit_post', $post->ID))
-        {
+        if (!current_user_can('edit_post', $post->ID)) {
             return $post->ID;
         }
 
@@ -111,27 +103,22 @@ class ImageVideoMetaController
         $gallery_data['gallery_image_active'] = isset($_POST['gallery_image_active']) ? $_POST['gallery_image_active'] : '';
 
         /* / Add values of $gallery_data as custom fields */
-        if ($post->post_type == 'revision')
-        {
+        if ($post->post_type == 'revision') {
             return;
         }
 
         $key = '_bs_gallery_column';
         $value = $gallery_data;
 
-        if (get_post_meta($post->ID, $key, FALSE))
-        {
+        if (get_post_meta($post->ID, $key, FALSE)) {
             /* / If the custom field already has a value it will update */
             update_post_meta($post->ID, $key, $value);
-        }
-        else
-        {
+        } else {
             /* / If the custom field doesn't have a value it will add */
             add_post_meta($post->ID, $key, $value);
         }
 
-        if (!$value)
-        {
+        if (!$value) {
             delete_post_meta($post->ID, $key); // Delete if blank value
         }
     }
@@ -139,34 +126,27 @@ class ImageVideoMetaController
     //
     /*     * ****  SHORT CODE  ******* */
 
-    public function showVideo($atts)
-    {
+    public function showVideo($atts) {
         ob_start();
         $postID = isset($atts['id']) ? $atts['id'] : '';
         $fancyBox = isset($atts['popup']) && $atts['popup'] == 'true' ? $atts['popup'] : false;
         $bs_gallery_column = get_post_meta($postID, '_bs_gallery_column', true);
         $template = '';
 
-        if(isset($atts['carousel']) && $atts['carousel']==true)
-        {
+        if (isset($atts['carousel']) && $atts['carousel'] == true) {
             $template = "carousel";
-        }
-        else
-        {
+        } else {
             $this->fancyBoxCall();
         }
 
-        if($template == 'carousel')
-        {
+        if ($template == 'carousel') {
             $this->fireBx('gallery_section');
             $this->carouselTemplate($bs_gallery_column);
-        }
-        else
-        {
+        } else {
             $this->fancyBoxTemplate($bs_gallery_column);
         }
-        
-         /*
+
+        /*
           <div class="popBox" style="display: none;"></div>
           <script type="text/javascript">
           /*    jQuery(document).ready(function ()
@@ -200,29 +180,25 @@ class ImageVideoMetaController
           jQuery('.pop_section').fadeOut();
           });
           });
-          </script> */ ?>
+          </script> */
+        ?>
         <?php
         return ob_get_clean();
     }
+
     /*     * *************************************************************************** */
     /*     * *************************************************************************************** */
 
-    
-
-
-    function getCats($id, $taxonomy)
-    {
+    function getCats($id, $taxonomy) {
         $cat_args = array('parent' => $id, 'number' => 10, 'hide_empty' => false);
         $termParent = get_terms($taxonomy, $cat_args);
         return $termParent;
     }
 
-    function clean($string)
-    {
+    function clean($string) {
         $string = str_replace(' ', '-', $string); // Replaces all spaces with hyphens.
         $test = preg_replace('/[^A-Za-z0-9\-]/', '', $string); // Removes special chars.
         return $test;
     }
 
-    
 }

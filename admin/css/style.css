@@ -1,73 +1,30 @@
-table#ivmGallery{
-    padding: .025%;
-    width: 99%;
-}
-
-#ivmGallery td, #ivmGallery th {
-    text-align: center;
-}
-
+table#ivmGallery{padding: .025%; width: 99%;}
+#ivmGallery td, #ivmGallery th {text-align: center;}
 .bsImageGallery .thumb-prev-cont{max-width: 150px; margin-left: 10px; width: 100%; display: inline-block;}
-
 .clearfix{clear: both; display: block;}
-
-.col-1{
-    float: left; width: 99.99%;
-}
-
-.col-2{
-    float: left; width: 49.99%;
-}
-
-.col-3{
-    float: left; width: 33.33%;
-}
-
-.col-4{
-    float: left; width: 24.99%;
-}
-
-.col-5{
-    float: left; width: 19.99%;
-}
-
-.nodisplay{
-    display: none;
-}
-
-body .bsImageGallery .button
-{
-	vertical-align: middle;
-    font-size: 13px;    
-}
-
-body .bsImageGallery .button.button-large
-{
-    padding: 0 12px 30px;
-}
-
-.bsImageGallery .dashicons {
-    font-size: 18px;
-    vertical-align: middle;
-    line-height: 19px;
-}
-
-.bsImageGallery .descText{
-    height: 100px; resize: none; margin-top:5px;
-}
-
-.dashicons-no{
-    color: rgb(206, 171, 18);
-}
-
-.dashicons-trash{
-    color: #f22;
-}
-
-.dashicons-yes{
-    color: rgb(18, 88, 18);
-}
-
-.dashicons-edit{
-    color: rgb(25, 110, 206);
-}
+.col-1{float: left; width: 99.99%;}
+.col-2{float: left; width: 49.99%;}
+.col-3{float: left; width: 33.33%;}
+.col-4{float: left; width: 24.99%;}
+.col-5{float: left; width: 19.99%;}
+.nodisplay{display: none;}
+body .bsImageGallery .button{vertical-align: middle; font-size: 13px;}
+body .bsImageGallery .button.button-large{padding: 0 12px 30px;}
+.bsImageGallery .dashicons {font-size: 18px; vertical-align: middle; line-height: 19px;}
+.bsImageGallery .descText{height: 100px; resize: none; margin-top:5px;}
+.dashicons-no{color: rgb(206, 171, 18);}
+.dashicons-trash{color: #f22;}
+.dashicons-yes{color: rgb(18, 88, 18);}
+.dashicons-edit{color: rgb(25, 110, 206);}
+.my-1{margin-top:0rem!important}
+.my-1{margin-top:.25rem!important}
+.my-2{margin-top:.5rem!important}
+.my-3{margin-top:1rem!important}
+.my-4{margin-top:1.5rem!important}
+.my-5{margin-top:3rem!important}
+.my-1{margin-bottom:0rem!important}
+.my-1{margin-bottom:.25rem!important}
+.my-2{margin-bottom:.5rem!important}
+.my-3{margin-bottom:1rem!important}
+.my-4{margin-bottom:1.5rem!important}
+.my-5{margin-bottom:3rem!important}
